@@ -13,13 +13,26 @@ class SLinked_List:
     self.head = None
 
   def traverse(self):
-      curr_node = self.head
-      while(True):
-        if(curr_node != None):
-          print(curr_node.value)
-          curr_node = curr_node.next
+    curr_node = self.head
+    while(True):
+      if(curr_node != None):
+        print(curr_node.value)
+        curr_node = curr_node.next
+      else:
+        break
 
+  #I used recursion to perform this reverse traversal
+  def reverse_traverse(self, mynode):
+    if(mynode.next == None):
+      print(mynode.value)
+      return
 
+    self.reverse_traverse(mynode.next)
+    print(mynode.value)
+
+    return
+
+    # We must traverse to the end of the linked list
 
 if __name__ == "__main__":
 
@@ -39,5 +52,11 @@ if __name__ == "__main__":
     head = next_node
 
   #We then traverse the link
+  print("Traversal")
   curr_node = my_singly_linked_list.head
   my_singly_linked_list.traverse()
+
+
+  #Reverse traversal
+  print("Reverse Traversal")
+  my_singly_linked_list.reverse_traverse(my_singly_linked_list.head)
