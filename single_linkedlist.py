@@ -32,7 +32,26 @@ class SLinked_List:
 
     return
 
-    # We must traverse to the end of the linked list
+  def delete_node(self, value):
+    #The case for head removal
+    if(value == self.head.value):
+      self.head = self.head.next
+    else:
+      curr_node = self.head
+      while(True):
+        prev_node = curr_node
+
+        #If we have reached the end of the list
+        if(curr_node.next == None):
+          print("Node to delete...not found")
+          return
+        curr_node = curr_node.next
+
+        #The node to remove is curr_node
+        if(curr_node.value == value):
+          prev_node.next = curr_node.next
+          return
+
 
 if __name__ == "__main__":
 
@@ -56,7 +75,11 @@ if __name__ == "__main__":
   curr_node = my_singly_linked_list.head
   my_singly_linked_list.traverse()
 
-
   #Reverse traversal
   print("Reverse Traversal")
   my_singly_linked_list.reverse_traverse(my_singly_linked_list.head)
+
+  #Deleting a node
+  print("Node deletion")
+  my_singly_linked_list.delete_node(0)
+  my_singly_linked_list.traverse()
