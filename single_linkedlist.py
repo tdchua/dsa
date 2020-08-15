@@ -52,6 +52,20 @@ class SLinked_List:
           prev_node.next = curr_node.next
           return
 
+  def insert_node(self, value):
+    #In the DSA book, it was only mentioned that adding a node would be inserting it after the list's tail.
+    if(self.head != None):
+      curr_node = self.head
+      while(True):
+        if(curr_node.next == None):
+          curr_node.next = Node(value)
+          return
+        else:
+          curr_node = curr_node.next
+    else:
+      self.head = Node(value)
+      return
+
 
 if __name__ == "__main__":
 
@@ -80,6 +94,11 @@ if __name__ == "__main__":
   my_singly_linked_list.reverse_traverse(my_singly_linked_list.head)
 
   #Deleting a node
-  print("Node deletion")
+  print("Node Deletion")
   my_singly_linked_list.delete_node(0)
+  my_singly_linked_list.traverse()
+
+  #Inserting a node
+  print("Node Insertion")
+  my_singly_linked_list.insert_node(16)
   my_singly_linked_list.traverse()
