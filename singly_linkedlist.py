@@ -54,7 +54,7 @@ class SLinked_List:
 
   def insert_node(self, value):
     #In the DSA book, it was only mentioned that adding a node would be inserting it after the list's tail.
-    if(self.head != None):
+    if(self.head != None): #To check if there is no head
       curr_node = self.head
       while(True):
         if(curr_node.next == None):
@@ -77,12 +77,9 @@ if __name__ == "__main__":
   #We then instantiate the linked list
   my_singly_linked_list = SLinked_List()
   #We connect the head pointer of the linked list to the first node
-  my_singly_linked_list.head = head
 
   for element in my_list[1:]:
-    next_node = Node(element)
-    head.next = next_node
-    head = next_node
+    my_singly_linked_list.insert_node(element)
 
   #We then traverse the link
   print("Traversal")
