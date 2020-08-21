@@ -12,15 +12,21 @@ class BinarySearchTree: #The BST Class
   def __init__(self, root):
     self.root = root
 
+  def insert(self, value):
+    if(self.root == None):
+      self.root = Node(value)
+    else:
+      self.insert_Node(self.root, value)
+
   def insert_Node(self, currentNode, value):
     if(currentNode == None): #There is no root of the tree yet
       print("Checking")
       currentNode = Node(value)
     else: #The tree has already been instantiated
       if(value < currentNode.value): #Check the left side
-        self.insert(currentNode.left, value)
+        self.insert_Node(currentNode.left, value)
       elif(value >= currentNode.value): #Check the right side
-        self.insert(currentNode.right, value)
+        self.insert_Node(currentNode.right, value)
 
 
 if __name__ == "__main__":
@@ -29,7 +35,7 @@ if __name__ == "__main__":
   #Let's create a binary search tree with the numbers from 1 to 10
   my_BST = BinarySearchTree(None)
   for number in range(1, 11):
-    my_BST.insert(my_BST.root, number)
+    my_BST.insert(number)
 
 
   #Let's try printing the root
