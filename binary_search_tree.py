@@ -17,7 +17,6 @@ class BinarySearchTree: #The BST Class
     if(self.root == None):
       self.root = Node(value)
     else:
-      print("Inserting a Node!")
       self.insert_Node(self.root, value)
 
   def insert_Node(self, currentNode, value):
@@ -27,7 +26,6 @@ class BinarySearchTree: #The BST Class
       else:
         self.insert_Node(currentNode.left, value)
     elif(value >= currentNode.value): #Check the right side
-      print("Bye", currentNode.value)
       if(currentNode.right == None):
         currentNode.right = Node(value)
       else:
@@ -41,9 +39,23 @@ class BinarySearchTree: #The BST Class
           return
         else:
           print(curr_node.value)
-          # self.traversal(curr_node.left)
+          self.traversal(curr_node.left)
           self.traversal(curr_node.right)
 
+  def search(self, curr_node, value): #Search if a value is present in the tree or not.
+    if(curr_node == None):
+      return 0
+    else:
+      left_result = 0
+      right_result = 0
+      if(curr_node.value == value):
+        return 1
+      elif(value < curr_node.value):
+        left_result = self.search(curr_node.left, value)
+      elif(value > curr_node.value):
+        right_result = self.search(curr_node.right, value)
+
+      return left_result + right_result
 
 
 if __name__ == "__main__":
@@ -51,7 +63,8 @@ if __name__ == "__main__":
   #Let's start with something simple.
   #Let's create a binary search tree with the numbers from 1 to 10
   my_BST = BinarySearchTree(None)
-  for number in range(1, 11):
+  my_list = [1,5,3,7,9,8,10,15,14,13,12,16]
+  for number in my_list:
     my_BST.insert(number)
 
 
@@ -63,3 +76,8 @@ if __name__ == "__main__":
   #Preorder Traversal!
   print("Preorder Traversal")
   my_BST.traversal(my_BST.root, 0)
+
+  #Search
+  print("BST Search")
+  print("Searching for 15: ", my_BST.search(my_BST.root, 15))
+  print("Searching for 79: ", my_BST.search(my_BST.root, 79))
