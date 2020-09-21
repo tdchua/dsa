@@ -58,7 +58,32 @@ class BinarySearchTree: #The BST Class
       return left_result + right_result
 
 
-  def deletion(self, curr_node, value):
+  def deletion(self, value):
+    parent_node = find_parent(value)
+    node = find_node(value)
+
+    if(parent_node == 0):
+      self.root = None
+    else:
+      right_left_child = 0
+      if(node.val < parent_node.val):
+        right_left_child = 0
+      if(node.val > parent_node.val):
+        right_left_child = 1
+
+      if(node.right != None and node.left != None): #Right and Left child nodes are present
+        
+      elif(node.right != None): #Right leaf only
+        if(right_left_child == 1): #Node is the right child of parent node
+          parent_node.right = node.right
+        else:
+          parent_node.left = node.right
+      elif(node.left != None): #Left leaf only
+        if(right_left_child == 1):
+          parent_node.right = node.left
+        else:
+          parent_node.left = node.left
+
 
 
     return 0
@@ -76,8 +101,23 @@ class BinarySearchTree: #The BST Class
       parent = self.find_parent(curr_node.left, value)
     elif(curr_node.value < value):
       parent = self.find_parent(curr_node.right, value)
-    print(parent)
+
     return parent
+
+
+  def find_node(self, curr_node, value):
+    if(curr_node == None):
+      return 0
+    else:
+      result = 0
+      if(curr_node.value == value):
+        return curr_node
+      elif(value < curr_node.value):
+        result = self.find_node(curr_node.left, value)
+      elif(value > curr_node.value):
+        result = self.find_node(curr_node.right, value)
+
+      return result
 
 if __name__ == "__main__":
 
@@ -106,3 +146,14 @@ if __name__ == "__main__":
   #Parent Finding
   print("BST Parent Finding")
   print("Parent for 15 is :", (my_BST.find_parent(my_BST.root, 15)).value)
+
+  #Node Finding
+  print("BST Node Finding")
+  print("Node for 15 is: ", my_BST.find_node(my_BST.root, 15))
+  print("It has the ff value: ", my_BST.find_node(my_BST.root, 15).value)
+
+
+  #Node Deletion
+  print("BST Node Deletion")
+  priont("Node 15 is being deleted...")
+  my_BST.delete
