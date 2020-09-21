@@ -58,6 +58,27 @@ class BinarySearchTree: #The BST Class
       return left_result + right_result
 
 
+  def deletion(self, curr_node, value):
+
+
+    return 0
+
+  def find_parent(self, curr_node, value): #A helper function to find the parent of a node
+    if(curr_node.left != None):
+      if(curr_node.left.value == value):
+        return curr_node
+    if(curr_node.right != None):
+      if(curr_node.right.value == value):
+        return curr_node
+
+    parent = 0
+    if(curr_node.value > value):
+      parent = self.find_parent(curr_node.left, value)
+    elif(curr_node.value < value):
+      parent = self.find_parent(curr_node.right, value)
+    print(parent)
+    return parent
+
 if __name__ == "__main__":
 
   #Let's start with something simple.
@@ -81,3 +102,7 @@ if __name__ == "__main__":
   print("BST Search")
   print("Searching for 15: ", my_BST.search(my_BST.root, 15))
   print("Searching for 79: ", my_BST.search(my_BST.root, 79))
+
+  #Parent Finding
+  print("BST Parent Finding")
+  print("Parent for 15 is :", (my_BST.find_parent(my_BST.root, 15)).value)
