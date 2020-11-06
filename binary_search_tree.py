@@ -32,15 +32,50 @@ class BinarySearchTree: #The BST Class
         self.insert_Node(currentNode.right, value)
       # print(value)
 
-  def traversal(self, curr_node, mode=0): #mode = 0-Preorder, 1-Postorder, 2-BFS
+  def traversal(self, curr_node, mode=0, to_explore=[]): #mode = 0-Preorder, 1-Postorder, 2-Inorder, 3-BFS
     if(mode == 0 or mode == None):
         #Implementation of Preorder traversal
         if(curr_node == None):
           return
         else:
           print(curr_node.value)
-          self.traversal(curr_node.left)
-          self.traversal(curr_node.right)
+          self.traversal(curr_node.left, 0)
+          self.traversal(curr_node.right, 0)
+
+    elif(mode == 1):
+      #Implementation of Postorder traversal
+      if(curr_node == None):
+        return
+      else:
+        self.traversal(curr_node.left, 1)
+        self.traversal(curr_node.right, 1)
+        print(curr_node.value)
+
+    elif(mode == 2):
+      #Implementation of Inorder traversal
+      if(curr_node == None):
+        return
+      else:
+        self.traversal(curr_node.left, 2)
+        print(curr_node.value)
+        self.traversal(curr_node.right, 2)
+
+    elif(mode == 3):
+      #Implementation of BFS traversal
+      if(curr_node == None):
+        return
+      else:
+        print(curr_node.value)
+        if(curr_node.left != None):
+          to_explore.append(curr_node.left)
+        if(curr_node.right != None):
+          to_explore.append(curr_node.right)
+
+        #Time to explore
+        if(len(to_explore) != 0):
+          self.traversal(to_explore[0],3, to_explore[1:])
+
+
 
   def search(self, curr_node, value): #Search if a value is present in the tree or not.
     if(curr_node == None):
@@ -59,32 +94,44 @@ class BinarySearchTree: #The BST Class
 
 
   def deletion(self, value):
-    parent_node = find_parent(value)
-    node = find_node(value)
+    parent_node = self.find_parent(self.root, value)
+    node = self.find_node(self.root, value)
 
-    if(parent_node == 0):
-      self.root = None
-    else:
-      right_left_child = 0
-      if(node.val < parent_node.val):
-        right_left_child = 0
-      if(node.val > parent_node.val):
-        right_left_child = 1
+    right_left_child = 0
+    if(parent_node != 0):
+      if(node.value < parent_node.value):
+        right_left_child = 0 #current node is the left child
+      if(node.value > parent_node.value):
+        right_left_child = 1 #current node is the right child
 
-      if(node.right != None and node.left != None): #Right and Left child nodes are present
-        
-      elif(node.right != None): #Right leaf only
+    if(node.right != None and node.left != None): #Right and Left child nodes are present
+      node_max_in_left = self.find_max(node.left) #This returns the highest value in the left subtree
+      node_max_in_left.right = node.right
+      if(parent_node != 0):
+        if(right_left_child == 1):
+          parent_node.right = node_max_in_left
+        else:
+          parent_node.left = node_max_in_right
+      else: #If the root is the one to be removed
+        self.root = node_max_in_left
+
+    elif(node.right != None): #Right leaf only
+      if(parent_node != 0): #There is a parent
         if(right_left_child == 1): #Node is the right child of parent node
           parent_node.right = node.right
         else:
           parent_node.left = node.right
-      elif(node.left != None): #Left leaf only
+      else: #This is the root node
+        self.root = node.right
+
+    elif(node.left != None): #Left leaf only
+      if(parent_node != 0):
         if(right_left_child == 1):
           parent_node.right = node.left
         else:
           parent_node.left = node.left
-
-
+      else: #This is the root node
+        self.root = node.left
 
     return 0
 
@@ -105,7 +152,7 @@ class BinarySearchTree: #The BST Class
     return parent
 
 
-  def find_node(self, curr_node, value):
+  def find_node(self, curr_node, value): #Helper function to find the reference of the node.
     if(curr_node == None):
       return 0
     else:
@@ -118,6 +165,19 @@ class BinarySearchTree: #The BST Class
         result = self.find_node(curr_node.right, value)
 
       return result
+
+  def find_min(self, curr_node):
+    if(curr_node.left == None):
+      return curr_node
+    else:
+      return self.find_min(curr_node.left)
+
+  def find_max(self, curr_node):
+    if(curr_node.right == None):
+      return curr_node
+    else:
+      return self.find_max(curr_node.right)
+
 
 if __name__ == "__main__":
 
@@ -134,9 +194,18 @@ if __name__ == "__main__":
   print(my_BST.root)
   print(my_BST.root.value)
 
-  #Preorder Traversal!
+  #Traversal!
   print("Preorder Traversal")
   my_BST.traversal(my_BST.root, 0)
+
+  print("Postorder Traversal")
+  my_BST.traversal(my_BST.root, 1)
+
+  print("Inorder Traversal")
+  my_BST.traversal(my_BST.root, 2)
+
+  print("BFS Traversal")
+  my_BST.traversal(my_BST.root, 3)
 
   #Search
   print("BST Search")
@@ -155,5 +224,7 @@ if __name__ == "__main__":
 
   #Node Deletion
   print("BST Node Deletion")
-  priont("Node 15 is being deleted...")
-  my_BST.delete
+  print("Node 15 is being deleted...")
+  my_BST.deletion(9)
+  print("Our new tree is")
+  # my_BST.traversal(my_BST.root, 0)

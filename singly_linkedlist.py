@@ -22,7 +22,7 @@ class SLinked_List:
         break
 
   #I used recursion to perform this reverse traversal
-  def reverse_traverse(self, mynode):
+  def reverse_traverse(self, mynode):∑
     if(mynode.next == None):
       print(mynode.value)
       return
