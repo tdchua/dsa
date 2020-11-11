@@ -52,14 +52,14 @@ def heap_deletion(heap, to_delete):
     heap[idx_to_delete] = val_last_elem
     heap.pop()
     idx = idx_to_delete
-
+    print(heap)
     while(2*idx + 1 < len(heap)): #Checks if left child is present
       idx_right_child = 2*idx + 2
       idx_left_child = 2*idx + 1
       idx_to_replace = idx_left_child
 
       if(2*idx + 2 < len(heap)): #Checks if right child is present
-          idx_to_replace = idx_left_child if idx_left_child < idx_right_child else idx_right_child
+          idx_to_replace = idx_left_child if heap[idx_left_child] < heap[idx_right_child] else idx_right_child
 
       if(heap[idx] > heap[idx_to_replace]):
         placeholder = heap[idx_to_replace]
@@ -72,11 +72,27 @@ def heap_deletion(heap, to_delete):
   return heap
 
 
+def heap_search(heap, to_search):
+  answer = False
+  for idx in range(len(heap)): #traversing the heap in this manner is sort of like BFS.
+    if(heap[idx] == to_search):
+      answer = True
+      break
+
+  return answer
+
+
+def heap_traversal(heap):
+  for element in heap:
+    print(element)
+
+
+
+
 if __name__ == "__main__":
 
-  to_insert = [3, 9, 12, 7, 1]
+  to_insert = [3, 9, 12, 7, 1, 15, 14, 13]
   my_heap = []
-
 
 
   #Insertion
@@ -90,3 +106,11 @@ if __name__ == "__main__":
   #After Deletion
   print("After Deletion")
   print(heap_deletion(my_heap, 3))
+
+  #Searching the Heap
+  print("Searching for 15")
+  print(heap_search(my_heap, 15))
+
+  #Traversing the Heap
+  print("Traversing the Heap")
+  print(heap_traversal(my_heap))
